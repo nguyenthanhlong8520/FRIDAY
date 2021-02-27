@@ -10,17 +10,14 @@ rate = friday.getProperty('rate')
 friday.setProperty('rate', 200)     
 
 def speak(audio):
+    friday.setProperty('rate', 160)
     friday.say(audio)
     friday.runAndWait()
 
 def infor_boss():   
     speak("You are my boss")
 
-def contact():
-    friday.setProperty('rate', 140)     
-    friday.say("email: nguyenthanhlong8520@gmail.com")
-    friday.say("phone number: 0384768818")
-    friday.setProperty('rate', 200) 
-    friday.runAndWait()
-
+def contact():   
+    speak("email: nguyenthanhlong8520@gmail.com")
+    speak("phone number: 0384768818")
 

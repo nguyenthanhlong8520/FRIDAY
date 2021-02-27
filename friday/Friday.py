@@ -28,7 +28,7 @@ def time():
 
 def command():
     with speech_recognition.Microphone() as mic:
-        audio = friday_hearing.record(mic, duration = 4)
+        audio = friday_hearing.record(mic, duration = 3)
     try:
         voice_boss = friday_hearing.recognize_google(audio, language='en')
         print(voice_boss)

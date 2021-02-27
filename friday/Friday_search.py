@@ -1,10 +1,12 @@
-import speech_recognition 
+import boss
+import time
+import requests
 import pyttsx3
 import datetime
 import webbrowser
 import Friday_infor
+import speech_recognition 
 import Friday_conversation
-import boss
 
 # Friday setting up to say 
 friday = pyttsx3.init()
@@ -15,12 +17,13 @@ rate = friday.getProperty('rate')
 friday.setProperty('rate', 200)    
 
 def speak(audio):
+    friday.setProperty('rate', 180)  
     friday.say(audio)
     friday.runAndWait()
 
 def command():
     with speech_recognition.Microphone() as mic:
-        audio = friday_hearing.record(mic, duration = 4)
+        audio = friday_hearing.record(mic, duration = 3)
     try:
         voice_boss = friday_hearing.recognize_google(audio, language='en')
         print(voice_boss)
@@ -62,6 +65,50 @@ def search(str):
         elif "photo" in str:
             speak("Opening photo on google chrome")
             Browser('https://photos.google.com')
+        elif "where is" in str:
+            print(str[9:len(str)])
+            location = str[9:len(str)]
+            speak(f'Here is {location} on google maps')
+            url=f"https://www.google.com/maps/place/{str[9:len(str)]}"
+            webbrowser.get().open(url)
+        elif "weather" in str:
+            try:
+                speak("Tell me about the city:")
+                city = command()
+                api_address='http://api.openweathermap.org/data/2.5/weather?appid=0c42f7f6b53b244c78a418f4f181282a&q='
+                url = api_address + city
+                json_data = requests.get(url).json()
+                format_add_temp = json_data['main']['temp']
+                humidity = json_data['main']['humidity']
+                wind = json_data['wind']['speed']
+                # print(json_data)
+                speak(f"the temperature of {city} city is {int(format_add_temp - 273)} degrees Celsius")
+                speak(f"the humidity is {humidity} percent")
+                speak(f"wind speed is {wind} meter per second")
+                print(int(format_add_temp - 273))
+                print(humidity)
+                print(wind)
+            except:
+                try:
+                    speak("The city invalid, please try again")
+                    speak("Tell me about the city:")
+                    city = command()
+                    api_address='http://api.openweathermap.org/data/2.5/weather?appid=0c42f7f6b53b244c78a418f4f181282a&q='
+                    url = api_address + city
+                    json_data = requests.get(url).json()
+                    format_add_temp = json_data['main']['temp']
+                    humidity = json_data['main']['humidity']
+                    wind = json_data['wind']['speed']
+                    # print(json_data)
+                    speak(f"the temperature of {city} city is {int(format_add_temp - 273)} degrees Celsius")
+                    speak(f"the humidity is {humidity} percent")
+                    speak(f"wind speed is {wind} meter per second")
+                    print(int(format_add_temp - 273))
+                    print(humidity)
+                    print(wind)
+                except:
+                    speak("The city invalid, try later")
+
         elif "search" in str:
             print(str[7:len(str)])
             search = str[7:len(str)]

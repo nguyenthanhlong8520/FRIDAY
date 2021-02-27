@@ -1,21 +1,30 @@
-import pyglet
+# import ctypes
+# import time
+# import keyboard
+# dll = ctypes.WinDLL('user32.dll')
+# dll.LockWorkStation()
+# time.sleep(2)
+# keyboard.send('enter')
+# keyboard.send('l,o,n,g,8,5,2,0')
+# keyboard.send('enter')
 
-animation = pyglet.image.load_animation('heart.gif')
-animSprite = pyglet.sprite.Sprite(animation)
 
-
-w = animSprite.width
-h = animSprite.height
-
-window = pyglet.window.Window(width=w, height=h)
-
-r,g,b,alpha = 0.5,0.5,0.8,0.5
-
-pyglet.gl.glClearColor(r,g,b,alpha)
-
-@window.event
-def on_draw():
-    window.clear()
-    animSprite.draw()
-
-pyglet.app.run()
+# # elif "write a note" in query:
+# #             speak("What should i write, sir")
+# #             note = takeCommand()
+# #             file = open('jarvis.txt', 'w')
+# #             speak("Sir, Should i include date and time")
+# #             snfm = takeCommand()
+# #             if 'yes' in snfm or 'sure' in snfm:
+# #                 strTime = datetime.datetime.now().strftime("% H:% M:% S")
+# #                 file.write(strTime)
+# #                 file.write(" :- ")
+# #                 file.write(note)
+# #             else:
+# #                 file.write(note)
+         
+# #         elif "show note" in query:
+# #             speak("Showing Notes")
+# #             file = open("jarvis.txt", "r") 
+# #             print(file.read())
+# #             speak(file.read(6))

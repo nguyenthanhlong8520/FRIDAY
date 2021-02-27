@@ -10,14 +10,12 @@ rate = friday.getProperty('rate')
 friday.setProperty('rate', 200)     
 
 def speak(audio):
+    friday.setProperty('rate', 180)  
     friday.say(audio)
     friday.runAndWait()
 
 def Name():   
-    friday.setProperty('rate', 150)     
-    friday.say("I'm friday")
-    friday.setProperty('rate', 200) 
-    friday.runAndWait()
+    speak("i'm Friday")
 
 
 
