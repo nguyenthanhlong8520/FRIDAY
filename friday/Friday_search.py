@@ -73,24 +73,6 @@ def search(str):
             webbrowser.get().open(url)
         elif "weather" in str:
             try:
-                speak("Tell me about the city:")
-                city = command()
-                api_address='http://api.openweathermap.org/data/2.5/weather?appid=0c42f7f6b53b244c78a418f4f181282a&q='
-                url = api_address + city
-                json_data = requests.get(url).json()
-                format_add_temp = json_data['main']['temp']
-                humidity = json_data['main']['humidity']
-                wind = json_data['wind']['speed']
-                # print(json_data)
-                speak(f"the temperature of {city} city is {int(format_add_temp - 273)} degrees Celsius")
-                speak(f"the humidity is {humidity} percent")
-                speak(f"wind speed is {wind} meter per second")
-                print(int(format_add_temp - 273))
-                print(humidity)
-                print(wind)
-            except:
-                try:
-                    speak("The city invalid, please try again")
                     speak("Tell me about the city:")
                     city = command()
                     api_address='http://api.openweathermap.org/data/2.5/weather?appid=0c42f7f6b53b244c78a418f4f181282a&q='
@@ -99,16 +81,58 @@ def search(str):
                     format_add_temp = json_data['main']['temp']
                     humidity = json_data['main']['humidity']
                     wind = json_data['wind']['speed']
+                    weather_description = json_data['weather'][0]['description'] #drizzle 
+                    visibility = json_data['visibility']
                     # print(json_data)
                     speak(f"the temperature of {city} city is {int(format_add_temp - 273)} degrees Celsius")
                     speak(f"the humidity is {humidity} percent")
                     speak(f"wind speed is {wind} meter per second")
+                    speak(f"visibility  is {int(visibility/1000)} kilometer")
+                    speak(f"The weather is {weather_description}")
                     print(int(format_add_temp - 273))
                     print(humidity)
                     print(wind)
-                except:
-                    speak("The city invalid, try later")
-
+                    print(int(visibility/1000))
+                    print(weather_description)
+                    try:
+                        add_Des = json_data['weather'][1]['main'] #drizzle 
+                        speak(f"and {add_Des}")
+                        print(add_Des)
+                    except:
+                        print("No data des add")
+            except:
+                    try:
+                        speak("The city invalid, please try again")
+                        speak("Tell me about the city:")
+                        city = command()
+                        api_address='http://api.openweathermap.org/data/2.5/weather?appid=0c42f7f6b53b244c78a418f4f181282a&q='
+                        url = api_address + city
+                        json_data = requests.get(url).json()
+                        format_add_temp = json_data['main']['temp']
+                        humidity = json_data['main']['humidity']
+                        wind = json_data['wind']['speed']
+                        weather_description = json_data['weather'][0]['description'] #drizzle 
+                        visibility = json_data['visibility']
+                        # print(json_data)
+                        speak(f"the temperature of {city} city is {int(format_add_temp - 273)} degrees Celsius")
+                        speak(f"the humidity is {humidity} percent")
+                        speak(f"wind speed is {wind} meter per second")
+                        speak(f"visibility  is {int(visibility/1000)} kilometer")
+                        speak(f"The weather is {weather_description}")
+                        print(int(format_add_temp - 273))
+                        print(humidity)
+                        print(wind)
+                        print(int(visibility/1000))
+                        print(weather_description)
+                        try:
+                            add_Des = json_data['weather'][1]['main'] #drizzle 
+                            speak(f"and {add_Des}")
+                            print(add_Des)
+                        except:
+                            print("No data des add")
+                    except:
+                        speak("The city invalid, try later")
+          
         elif "search" in str:
             print(str[7:len(str)])
             search = str[7:len(str)]

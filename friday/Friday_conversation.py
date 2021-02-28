@@ -98,7 +98,6 @@ def conversation(str):
             else:
                 file.write(note)
             speak("write success")
-         
         elif "show note" in str:
             speak("Showing Notes")
             file = open("C:/Users/nguye/OneDrive/Máy tính/jarvis.txt", "r") 
