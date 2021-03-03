@@ -3,14 +3,29 @@ import matplotlib.pyplot as plt
 import numpy
 import pandas as pd
 import csv
+import time
+from more_itertools import unique_everseen
+
+start_time = time.time()
 
 data_craw = []
-with open('data_15000_16000.csv', newline='', encoding='utf-8') as f:
+
+with open('data_draw.csv',newline='', encoding='utf-8') as f, open('data_remove_dup.csv','w',newline='', encoding='utf-8') as out_file:
+    out_file.writelines(unique_everseen(f))
+
+with open('data_remove_dup.csv', newline='', encoding='utf-8') as f:
     reader = csv.reader(f)
     for row in reader:
-        if row != "[]":
-            print(row)
             data_craw.append(row)
+
+for i in data_craw:
+    if len(i) == 0:
+       data_craw.remove(i)
+
+print("Total number of studens: " + str(len(data_craw)))
+# for i in data_craw:
+#     print(i)
+    
 
 for i in data_craw:
   try:
@@ -83,7 +98,7 @@ for i in data_craw:
   except:
     pass
 
-x = 22
+x = 25
 
 # so hs co diem higher x
 point = []
@@ -141,6 +156,13 @@ point.append(students_B0)
 point.append(students_C0)
 point.append(students_D0)
 
+point_ = []
+point_.append(students_A0_)
+point_.append(students_A1_)
+point_.append(students_B0_)
+point_.append(students_C0_)
+point_.append(students_D0_)
+
 # print("So hs tren")
 # print(students_A0)
 # print(students_A1)
@@ -156,18 +178,24 @@ point.append(students_D0)
 
 try:
     percent_student_higerX = []
-    percent_student_higerX.append( int(float(students_A0/students_A0_) * 100) ) 
-    percent_student_higerX.append( int(float(students_A1/students_A1_) * 100) ) 
-    percent_student_higerX.append( int(float(students_B0/students_B0_) * 100) ) 
-    percent_student_higerX.append( int(float(students_C0/students_C0_) * 100) ) 
-    percent_student_higerX.append( int(float(students_D0/students_D0_) * 100) ) 
+    percent_student_higerX.append( round(float(students_A0/students_A0_) * 100,2) ) 
+    percent_student_higerX.append( round(float(students_A1/students_A1_) * 100,2) ) 
+    percent_student_higerX.append( round(float(students_B0/students_B0_) * 100,2) ) 
+    percent_student_higerX.append( round(float(students_C0/students_C0_) * 100,2) ) 
+    percent_student_higerX.append( round(float(students_D0/students_D0_) * 100,2) ) 
 except:
     pass
-print(point)
-print(percent_student_higerX)
-
+print(f"So luong hoc sinh điểm cao trên {x}: " + str(point))
+print(f"So luong hoc xet tuyen to hop: " + str(point_))
+print("Phần trăm theo khối: " +  str(percent_student_higerX))
+#################################################
 # Bar chart
 # assigning x and y coordinates 
+
+font = {'family': 'serif',
+        'color':  'darkred',
+        'weight': 'normal',
+}
 
 ExamBlock = ['A00','A01','B00','C00', 'D00'] 
 # users = [80,60,20,50,80] 
@@ -176,13 +204,14 @@ figure, axis = plt.subplots()
 axis.set_ylim(0,100)
 # depicting the visualization 
 index = numpy.arange(len(ExamBlock)) 
-plt.bar(index, users, color='orange') 
+plt.bar(index, users, color='pink') 
 plt.xlabel('Exam block') 
-plt.ylabel('Percentages') 
+plt.xlabel(f'Total students: {len(data_craw)}',fontdict=font) 
+plt.ylabel('Percentages (%)', fontdict=font) 
 plt.xticks(index, ExamBlock) 
   
 # displaying the title 
-plt.title(label=f'The number of student have scores higher than {x}',  fontweight=10,  pad='2.0') 
+plt.title(label=f'The number of students reached scores higher than {x}',  fontweight=10,  pad='3.0',fontdict=font) 
 
 rects = axis.patches
 
@@ -192,5 +221,5 @@ for rect, label in zip(rects, point):
     height = rect.get_height()
     axis.text(rect.get_x() + rect.get_width() / 2, height + 5, label,
             ha='center', va='bottom')
-
+print("--- %s seconds ---" % (time.time() - start_time))
 plt.show()
