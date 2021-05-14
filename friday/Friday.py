@@ -10,13 +10,13 @@ import boss
 # Friday setting up to say 
 friday = pyttsx3.init()
 friday_hearing = speech_recognition.Recognizer()
-voice = friday.getProperty('voices')
-friday.setProperty('voice',voice[1].id)
+# voice = friday.getProperty('voices')
+# friday.setProperty('voice',voice[1].id)
 
 def speak(audio):
     friday.setProperty('rate', 160)     
     friday.say(audio)
-    # friday.setProperty('rate', 200) 
+    friday.setProperty('rate', 200) 
     friday.runAndWait()
 
 def time():

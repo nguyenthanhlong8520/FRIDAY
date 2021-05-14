@@ -12,7 +12,7 @@ import Friday_conversation
 friday = pyttsx3.init()
 friday_hearing = speech_recognition.Recognizer()
 voice = friday.getProperty('voices')
-friday.setProperty('voice',voice[1].id)
+# friday.setProperty('voice',voice[1].id)
 rate = friday.getProperty('rate')   
 friday.setProperty('rate', 200)    
 
@@ -119,9 +119,9 @@ def search(str):
                         speak(f"wind speed is {wind} meter per second")
                         speak(f"visibility  is {int(visibility/1000)} kilometer")
                         speak(f"The weather is {weather_description}")
-                        print(int(format_add_temp - 273))
-                        print(humidity)
-                        print(wind)
+                        print("temp :", int(format_add_temp - 273))
+                        print("humandity: ",humidity)
+                        print("wind: ", wind)
                         print(int(visibility/1000))
                         print(weather_description)
                         try:
